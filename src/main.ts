@@ -11,5 +11,4 @@ export const app = createApp(App)
 registerComponents(app)
 loadPlugins(['svgSpriteGenerator', 'toast'])
 
-const pinia = createPinia()
-app.use(router).use(pinia).mount('#app')
+app.use(createPinia()).use(router).mount('#app')

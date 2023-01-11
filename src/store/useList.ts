@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import * as listApi from '../api/list'
 import { useToast } from 'vue-toastification'
-import type { List, OnlyList, Color } from '@/types'
+import type { List } from '@/types'
+import { useRoute } from 'vue-router'
 
 const toast = useToast()
 
@@ -10,6 +11,19 @@ export const useListStore = defineStore('list', {
     list: [] as List[],
     addListItemLoading: false,
   }),
+  getters: {
+    getList(state): List[] {
+      const routes = useRoute()
+      const id = routes.params.id
+
+      if (id) {
+        const list = state.list.find((listItem) => listItem.id === +id) as List
+        return [list]
+      }
+
+      return state.list
+    },
+  },
   actions: {
     async fetchList() {
       return listApi.fetchLists<List[]>().then((list) => {

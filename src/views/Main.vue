@@ -13,7 +13,13 @@
             v-model:chosen-color="chosenColor"
           />
         </aside>
-        <main class="app__main"></main>
+        <main class="app__main">
+          <TaskItem
+            v-for="listItem in getList"
+            :key="listItem.id"
+            :title="{ name: listItem.name, color: listItem.color.hex }"
+          />
+        </main>
       </div>
     </div>
   </div>
@@ -21,6 +27,7 @@
 <script lang="ts">
 import List from '@/components/list/List.vue'
 import AddList from '@/components/add-list/AddList.vue'
+import TaskItem from '@/components/task/TaskItem.vue'
 import { defineComponent, ref } from 'vue'
 import { useListStore } from '@/store/useList'
 import { useColorStore } from '@/store/useColor'
@@ -32,7 +39,7 @@ export default defineComponent({
   async setup() {
     const listStore = useListStore()
     const { fetchList, deleteListItem, addListItem } = listStore
-    const { list, addListItemLoading } = storeToRefs(listStore)
+    const { list, addListItemLoading, getList } = storeToRefs(listStore)
 
     await fetchList()
 
@@ -42,7 +49,11 @@ export default defineComponent({
     await fetchColors()
 
     const title = ref('')
-    const chosenColor = ref<Color>()
+    const chosenColor = ref<Color>({
+      id: 0,
+      name: '',
+      hex: '',
+    })
     const showPopUp = ref(false)
 
     const onAddList = async () => {
@@ -74,11 +85,13 @@ export default defineComponent({
       showPopUp,
       title,
       chosenColor,
+      getList,
     }
   },
   components: {
     List,
     AddList,
+    TaskItem,
   },
 })
 </script>
@@ -112,6 +125,9 @@ export default defineComponent({
 
   &__main {
     flex: 1;
+    padding: 56px;
+    height: 100%;
+    overflow-y: auto;
   }
 }
 </style>

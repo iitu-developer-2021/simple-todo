@@ -19,9 +19,6 @@ export default defineComponent({
     },
     color: {
       type: String,
-      validator: (color: string) => {
-        return color.includes('#')
-      },
       default: '',
     },
     hoverColor: {

@@ -10,7 +10,7 @@
       :add-task-loading="loading"
       @closeAddPanel="setShowOff"
       @addList="addNewList"
-      chosen-color="localChosenColor"
+      :chosen-color="localChosenColor"
       @update:chosen-color="setLocalChosenColor"
       :model-value="localTitle"
       @update:model-value="setLocalTitle"
