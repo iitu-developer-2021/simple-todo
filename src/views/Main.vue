@@ -6,7 +6,7 @@
           <List :list="list" @deleteTask="deleteListItem" />
           <AddList
             :colors="colors"
-            @addList="onAddList"
+            @addList="addListItem"
             :loading="addListItemLoading"
             :show-pop-up="showPopUp"
             v-model:title="title"
@@ -15,7 +15,7 @@
         </aside>
         <main class="app__main">
           <TaskItem
-            v-for="listItem in getList"
+            v-for="listItem in tasks"
             :key="listItem.id"
             :title="{ name: listItem.name, color: listItem.color.hex }"
           />
@@ -28,64 +28,43 @@
 import List from '@/components/list/List.vue'
 import AddList from '@/components/add-list/AddList.vue'
 import TaskItem from '@/components/task/TaskItem.vue'
-import { defineComponent, ref } from 'vue'
-import { useListStore } from '@/store/useList'
-import { useColorStore } from '@/store/useColor'
-import { storeToRefs } from 'pinia'
-import type { List as ListType } from '@/types'
-import type { Color } from '@/types'
+import { defineComponent } from 'vue'
+import { useColor } from '@/views/composables/useColor'
+import { useList } from '@/views/composables/useList'
+import { useTask } from '@/views/composables/useTask'
 
 export default defineComponent({
   async setup() {
-    const listStore = useListStore()
-    const { fetchList, deleteListItem, addListItem } = listStore
-    const { list, addListItemLoading, getList } = storeToRefs(listStore)
+    const {
+      fetchList,
+      addListItem,
+      deleteListItem,
+      addListItemLoading,
+      title,
+      list,
+      showPopUp,
+      chosenColor,
+    } = useList()
+
+    const { colors, fetchColors } = useColor()
+
+    const { tasks } = useTask()
 
     await fetchList()
-
-    const colorStore = useColorStore()
-    const { fetchColors } = colorStore
-    const { colors } = storeToRefs(colorStore)
     await fetchColors()
 
-    const title = ref('')
-    const chosenColor = ref<Color>({
-      id: 0,
-      name: '',
-      hex: '',
-    })
-    const showPopUp = ref(false)
-
-    const onAddList = async () => {
-      const getList = (color: Color, title: string): ListType => ({
-        id: Math.ceil(Math.random() * 10000000) + 1,
-        name: title,
-        color: Object.assign({}, color) as Color,
-        colorId: color?.id as number,
-        tasks: [],
-      })
-
-      addListItem(getList(chosenColor.value as Color, title.value)).then(() => {
-        title.value = ''
-        chosenColor.value = {
-          id: Math.ceil(Math.random() * 10000000) + 1,
-          name: '',
-          hex: '',
-        }
-        showPopUp.value = false
-      })
-    }
-
     return {
-      list,
-      colors,
+      fetchList,
+      addListItem,
       deleteListItem,
-      onAddList,
       addListItemLoading,
-      showPopUp,
       title,
+      list,
+      showPopUp,
       chosenColor,
-      getList,
+      colors,
+      fetchColors,
+      tasks,
     }
   },
   components: {
