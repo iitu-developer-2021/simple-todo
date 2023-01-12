@@ -8,8 +8,14 @@
       class="task-child__input"
     />
     <label :for="fieldId" class="task-child__label">
-      <BaseSvg :icon="checkboxIcon" size="25" />
+      <div class="task-child__checkbox">
+        <BaseSvg :icon="checkboxIcon" size="25" />
+      </div>
       <span class="task-child__text">{{ label }}</span>
+      <span class="task-child__actions">
+        <BaseSvg icon="pencil" size="15" class="task-child__pencil" />
+        <BaseSvg icon="only-close" size="15" class="task-child__close" />
+      </span>
     </label>
   </div>
 </template>
@@ -40,6 +46,15 @@ export default {
 
 <style lang="scss">
 .task-child {
+  padding: 10px 10px;
+  border-radius: 10px;
+  transition: 0.3s all;
+  $self: &;
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+  }
+
   &__input {
     display: none;
   }
@@ -48,6 +63,12 @@ export default {
     display: flex;
     align-items: center;
     cursor: pointer;
+    padding-right: 60px;
+    position: relative;
+
+    &:hover #{$self}__actions {
+      display: block;
+    }
   }
 
   &__text {
@@ -56,6 +77,25 @@ export default {
     font-size: 20px;
     line-height: 19px;
     color: #000000;
+  }
+
+  &__actions {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 3px;
+    display: none;
+  }
+
+  &__pencil {
+    margin-right: 15px;
+  }
+
+  &__pencil,
+  &__close {
+    &:hover {
+      transform: scale(1.4);
+    }
   }
 }
 </style>

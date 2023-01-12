@@ -71,7 +71,7 @@
     {
       "listId": 1,
       "text": "qweqwe",
-      "completed": true,
+      "completed": false,
       "id": 7
     },
     {
@@ -83,7 +83,7 @@
     {
       "listId": 1,
       "text": "123",
-      "completed": true,
+      "completed": false,
       "id": 9
     },
     {
@@ -121,6 +121,12 @@
       "completed": true,
       "listId": 8779767,
       "text": "Second test app"
+    },
+    {
+      "id": 9867273,
+      "completed": true,
+      "listId": 1,
+      "text": "asdfasdbfhjabsjhdbfjhads hjfa hjsd hkjf ahsd f ashjdfbkha sdf akhsdb fkasd fakshd fka sdkfasdfasdfasd"
     }
   ],
   "colors": [

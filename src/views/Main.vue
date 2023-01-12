@@ -38,6 +38,7 @@
                 v-model:show-add-task-fields="addTaskFieldShow"
                 :add-task-loading="addTaskLoading"
                 @addTaskItem="addTask(listItem.id)"
+                class="add-task"
               />
             </template>
           </TaskItem>
@@ -151,9 +152,7 @@ export default defineComponent({
   }
 }
 
-.task-child {
-  &:not(:last-child) {
-    margin-bottom: 15px;
-  }
+.add-task {
+  margin-top: 10px;
 }
 </style>
