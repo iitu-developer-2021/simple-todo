@@ -19,6 +19,8 @@
             :key="listItem.id"
             :title="{ name: listItem.name, color: listItem.color.hex }"
             :children="listItem.tasks"
+            @editTitle="editTaskTitle(listItem.id)"
+            @updateCheck="updateTaskCompleted"
           />
         </main>
       </div>
@@ -49,7 +51,7 @@ export default defineComponent({
 
     const { colors, fetchColors } = useColor()
 
-    const { tasks } = useTask()
+    const { tasks, editTaskTitle, updateTaskCompleted } = useTask()
 
     await fetchList()
     await fetchColors()
@@ -66,6 +68,8 @@ export default defineComponent({
       colors,
       fetchColors,
       tasks,
+      editTaskTitle,
+      updateTaskCompleted,
     }
   },
   components: {

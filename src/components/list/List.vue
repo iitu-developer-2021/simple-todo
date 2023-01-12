@@ -49,6 +49,7 @@ export default defineComponent({
 
   &__item {
     font-size: 15px;
+    margin-bottom: 2px;
   }
 
   &__icon {

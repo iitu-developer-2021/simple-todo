@@ -13,6 +13,7 @@
         :label="child.text"
         :checked="child.completed"
         class="task-item__child"
+        @update:checked="$emit('updateCheck', child.id)"
       />
     </div>
   </div>
@@ -42,7 +43,7 @@ export default defineComponent({
       default: () => [],
     },
   },
-  emits: ['editTitle'],
+  emits: ['editTitle', 'updateCheck'],
   components: {
     TaskChild,
   },

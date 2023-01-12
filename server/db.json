@@ -2,12 +2,12 @@
   "lists": [
     {
       "id": 1,
-      "name": "Продажи",
+      "name": "Купитьsds",
       "colorId": 5
     },
     {
       "id": 2,
-      "name": "Фронтенд",
+      "name": "Фронтенд app",
       "colorId": 4
     },
     {
@@ -28,6 +28,11 @@
     {
       "id": 8779767,
       "name": "Second app",
+      "colorId": 5
+    },
+    {
+      "id": 9578914,
+      "name": "Test app",
       "colorId": 5
     }
   ],
@@ -71,7 +76,7 @@
     {
       "listId": 1,
       "text": "qweqwe",
-      "completed": false,
+      "completed": true,
       "id": 7
     },
     {

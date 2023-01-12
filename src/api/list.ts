@@ -1,8 +1,9 @@
 import axios from './index'
-import type { OnlyList } from '@/types'
+import type { OnlyList, Task } from '@/types'
 
 const URLS = {
   lists: '/lists',
+  tasks: '/tasks',
 }
 
 export const fetchLists = <T>() =>
@@ -13,3 +14,11 @@ export const deleteListItem = (listItemId: number) =>
 
 export const addListItem = (listItem: OnlyList) =>
   axios.post(URLS.lists, listItem).then((response) => response.data)
+
+export const updateListTitle = (updatedListItem: OnlyList) =>
+  axios
+    .put(URLS.lists + '/' + updatedListItem.id, updatedListItem)
+    .then((response) => response.data)
+
+export const changeTask = (updatedTask: Task) =>
+  axios.put(URLS.tasks + '/' + updatedTask.id, updatedTask).then((response) => response.data)
