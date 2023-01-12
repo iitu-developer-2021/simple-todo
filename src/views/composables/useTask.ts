@@ -7,7 +7,8 @@ export const useTask = () => {
   const route = useRoute()
   const router = useRouter()
   const listStore = useListStore()
-  const { editListTitle, changeCompletedStatus, addTask, addTaskLoading, deleteTask } = listStore
+  const { editListTitle, changeCompletedStatus, addTask, addTaskLoading, deleteTask, updateTask } =
+    listStore
   const { list } = storeToRefs(listStore)
   const paramsId = ref()
 
@@ -49,5 +50,6 @@ export const useTask = () => {
     addTaskInputValue,
     addTaskFieldShow,
     deleteTask,
+    updateTask,
   }
 }

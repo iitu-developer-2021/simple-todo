@@ -31,7 +31,8 @@
                 :checked="child.completed"
                 class="task-child"
                 @update:checked="changeCompletedStatus(child.id)"
-                @deleteTask="deleteTask(child.id)"
+                @editTask="updateTask(listItem.id, child.id)"
+                @deleteTask="deleteTask(listItem.id, child.id)"
               />
               <AddTask
                 :can-add="!!$route.params.id"
@@ -59,6 +60,7 @@ import { defineComponent } from 'vue'
 import { useColor } from '@/views/composables/useColor'
 import { useList } from '@/views/composables/useList'
 import { useTask } from '@/views/composables/useTask'
+import { useOutsideClick } from '@/composables/useOutsideClick'
 
 export default defineComponent({
   async setup() {
@@ -84,6 +86,7 @@ export default defineComponent({
       addTaskInputValue,
       addTaskFieldShow,
       deleteTask,
+      updateTask,
     } = useTask()
 
     await fetchList()
@@ -108,6 +111,7 @@ export default defineComponent({
       addTaskInputValue,
       addTaskFieldShow,
       deleteTask,
+      updateTask,
     }
   },
   components: {

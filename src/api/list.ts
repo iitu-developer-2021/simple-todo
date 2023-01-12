@@ -28,3 +28,6 @@ export const addTask = (task: Task) =>
 
 export const deleteTask = (taskId: number) =>
   axios.delete(URLS.tasks + '/' + taskId).then((response) => response.data)
+
+export const updateTask = (updatedTask: Task) =>
+  axios.put(URLS.tasks + '/' + updatedTask.id, updatedTask).then((response) => response.data)

@@ -1,5 +1,5 @@
 <template>
-  <div class="add-list">
+  <div class="add-list" :ref="setAddListRef">
     <button class="add-list__btn" @click.prevent="setShowOn">
       <BaseSvg icon="plus" size="15" />
       <span class="add-list__btn-text">Добавить папку</span>
@@ -22,6 +22,8 @@ import { defineComponent, PropType, watchEffect, ref } from 'vue'
 import AddList from './AddListPopUp.vue'
 import { Color } from '@/types'
 import { useToggle } from '@/composables/useState'
+import { useOutsideClick } from '@/composables/useOutsideClick'
+import type { Ref } from 'vue'
 
 export default defineComponent({
   props: {
@@ -82,6 +84,11 @@ export default defineComponent({
       localChosenColor.value = props.chosenColor
     })
 
+    const addListRef = ref<HTMLElement>()
+    const setAddListRef = (ref: HTMLElement) => (addListRef.value = ref)
+
+    useOutsideClick(addListRef as Ref<HTMLElement>, setShowOff)
+
     return {
       show,
       setShowOn,
@@ -91,6 +98,8 @@ export default defineComponent({
       localTitle,
       setLocalTitle,
       setLocalChosenColor,
+      addListRef,
+      setAddListRef,
     }
   },
   components: {

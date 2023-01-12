@@ -134,21 +134,45 @@ export const useListStore = defineStore('list', {
           this.addTaskLoading = false
         })
     },
-    deleteTask(taskId: number) {
+    deleteTask(listId: number, taskId: number) {
       return listApi
         .deleteTask(taskId)
         .then(() => {
-          this.list = this.list.map((listItem) => {
-            const taskIndex = listItem.tasks.findIndex((task) => task.id === taskId)
-            if (taskId !== -1) {
-              listItem.tasks.splice(taskIndex, 1)
-            }
-            return listItem
-          })
+          const list = this.list.find((listItem) => listItem.id === listId)
+          if (!list) return
+          const foundIndex = list.tasks.findIndex((task) => task.id === taskId)
+          if (foundIndex !== -1) list.tasks.splice(foundIndex, 1)
         })
         .catch((e) => {
           console.error(e.message)
           toast.error('Не удалось удалить задачу')
+        })
+    },
+    updateTask(listId: number, taskId: number) {
+      const foundList = this.list.find((listItem) => listItem.id === listId)
+      if (!foundList) return
+
+      const neededTask = foundList.tasks.find((task) => task.id === taskId)
+      if (!neededTask) return
+
+      const updatedText = window.prompt('Введите новое название', neededTask.text)
+      if (!updatedText) return
+
+      const generatedTask: Task = {
+        id: neededTask.id,
+        text: updatedText,
+        completed: neededTask.completed,
+        listId: neededTask.listId,
+      }
+
+      return listApi
+        .updateTask(generatedTask)
+        .then(() => {
+          neededTask.text = updatedText
+        })
+        .catch((e) => {
+          console.error(e.message)
+          toast.error('Не удалось отредактировать название')
         })
     },
   },
