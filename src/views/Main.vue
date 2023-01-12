@@ -19,9 +19,28 @@
             :key="listItem.id"
             :title="{ name: listItem.name, color: listItem.color.hex }"
             :children="listItem.tasks"
-            @editTitle="editTaskTitle(listItem.id)"
+            @editTitle="editListTitle(listItem.id)"
             @updateCheck="updateTaskCompleted"
-          />
+          >
+            <template #default="{ children }">
+              <TaskChild
+                v-for="child in children"
+                :key="child.id"
+                :field-id="child.id.toString()"
+                :label="child.text"
+                :checked="child.completed"
+                class="task-child"
+                @update:checked="changeCompletedStatus(child.id)"
+              />
+              <AddTask
+                :can-add="!!$route.params.id"
+                v-model="addTaskInputValue"
+                v-model:show-add-task-fields="addTaskFieldShow"
+                :add-task-loading="addTaskLoading"
+                @addTaskItem="addTask(listItem.id)"
+              />
+            </template>
+          </TaskItem>
         </main>
       </div>
     </div>
@@ -31,6 +50,9 @@
 import List from '@/components/list/List.vue'
 import AddList from '@/components/add-list/AddList.vue'
 import TaskItem from '@/components/task/TaskItem.vue'
+import TaskChild from '@/components/task/TaskChild.vue'
+import AddTask from '@/components/add-task/AddTask.vue'
+
 import { defineComponent } from 'vue'
 import { useColor } from '@/views/composables/useColor'
 import { useList } from '@/views/composables/useList'
@@ -51,13 +73,20 @@ export default defineComponent({
 
     const { colors, fetchColors } = useColor()
 
-    const { tasks, editTaskTitle, updateTaskCompleted } = useTask()
+    const {
+      tasks,
+      editListTitle,
+      changeCompletedStatus,
+      addTask,
+      addTaskLoading,
+      addTaskInputValue,
+      addTaskFieldShow,
+    } = useTask()
 
     await fetchList()
     await fetchColors()
 
     return {
-      fetchList,
       addListItem,
       deleteListItem,
       addListItemLoading,
@@ -65,17 +94,24 @@ export default defineComponent({
       list,
       showPopUp,
       chosenColor,
+
       colors,
-      fetchColors,
+
       tasks,
-      editTaskTitle,
-      updateTaskCompleted,
+      editListTitle,
+      changeCompletedStatus,
+      addTask,
+      addTaskLoading,
+      addTaskInputValue,
+      addTaskFieldShow,
     }
   },
   components: {
     List,
     AddList,
     TaskItem,
+    TaskChild,
+    AddTask,
   },
 })
 </script>
@@ -112,6 +148,12 @@ export default defineComponent({
     padding: 56px;
     height: 100%;
     overflow-y: auto;
+  }
+}
+
+.task-child {
+  &:not(:last-child) {
+    margin-bottom: 15px;
   }
 }
 </style>

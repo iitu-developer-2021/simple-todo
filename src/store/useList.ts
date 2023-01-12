@@ -4,13 +4,18 @@ import { useToast } from 'vue-toastification'
 import type { List, OnlyList } from '@/types'
 import { router } from '@/router'
 import type { Task } from '@/types'
+import type { Color } from '@/types'
+import { List as ListType } from '@/types'
 
 const toast = useToast()
+
+const generateId = () => Math.ceil(Math.random() * 10000000) + 1
 
 export const useListStore = defineStore('list', {
   state: () => ({
     list: [] as List[],
     addListItemLoading: false,
+    addTaskLoading: false,
   }),
   actions: {
     async fetchList() {
@@ -30,7 +35,15 @@ export const useListStore = defineStore('list', {
           toast.error('Не удалось удалить список')
         })
     },
-    async addListItem(listItem: List) {
+    async addListItem(name: string, color: Color) {
+      const listItem: ListType = {
+        id: generateId(),
+        name: name,
+        color: color,
+        colorId: color.id as number,
+        tasks: [],
+      }
+
       this.addListItemLoading = true
       return listApi
         .addListItem({ id: listItem.id, name: listItem.name, colorId: listItem.colorId })
@@ -93,6 +106,32 @@ export const useListStore = defineStore('list', {
         .catch((e) => {
           console.error(e.message)
           toast.error('Не удалось поменять значение checked')
+        })
+    },
+    addTask(listId: number, value: string) {
+      const newTask: Task = {
+        id: generateId(),
+        completed: false,
+        listId: listId,
+        text: value,
+      }
+
+      this.addTaskLoading = true
+      return listApi
+        .addTask(newTask)
+        .then(() => {
+          this.list.forEach((listItem) => {
+            if (listItem.id === listId) {
+              listItem.tasks.push(newTask)
+            }
+          })
+        })
+        .catch((e) => {
+          console.error(e.message)
+          toast.error('Не удалось добавить задачу')
+        })
+        .finally(() => {
+          this.addTaskLoading = false
         })
     },
   },

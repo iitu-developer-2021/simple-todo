@@ -22,3 +22,6 @@ export const updateListTitle = (updatedListItem: OnlyList) =>
 
 export const changeTask = (updatedTask: Task) =>
   axios.put(URLS.tasks + '/' + updatedTask.id, updatedTask).then((response) => response.data)
+
+export const addTask = (task: Task) =>
+  axios.post(URLS.tasks, task).then((response) => response.data)

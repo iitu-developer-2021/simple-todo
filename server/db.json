@@ -2,7 +2,7 @@
   "lists": [
     {
       "id": 1,
-      "name": "Купитьsds",
+      "name": "Купить",
       "colorId": 5
     },
     {
@@ -29,11 +29,6 @@
       "id": 8779767,
       "name": "Second app",
       "colorId": 5
-    },
-    {
-      "id": 9578914,
-      "name": "Test app",
-      "colorId": 5
     }
   ],
   "tasks": [
@@ -47,7 +42,7 @@
       "id": 2,
       "listId": 2,
       "text": "Изучить паттерны проектирования",
-      "completed": false
+      "completed": true
     },
     {
       "id": 3,
@@ -59,7 +54,7 @@
       "id": 4,
       "listId": 2,
       "text": "Redux (redux-observable, redux-saga)",
-      "completed": false
+      "completed": true
     },
     {
       "listId": 2,
@@ -70,7 +65,7 @@
     {
       "listId": 1,
       "text": "test",
-      "completed": false,
+      "completed": true,
       "id": 6
     },
     {
@@ -88,7 +83,7 @@
     {
       "listId": 1,
       "text": "123",
-      "completed": false,
+      "completed": true,
       "id": 9
     },
     {
@@ -96,6 +91,36 @@
       "text": "222",
       "completed": true,
       "id": 12
+    },
+    {
+      "id": 7839633,
+      "completed": true,
+      "listId": 1,
+      "text": "Test app"
+    },
+    {
+      "id": 964960,
+      "completed": true,
+      "listId": 1,
+      "text": "Second test app"
+    },
+    {
+      "id": 4142920,
+      "completed": true,
+      "listId": 1,
+      "text": "app"
+    },
+    {
+      "id": 8425994,
+      "completed": true,
+      "listId": 8779767,
+      "text": "Test app"
+    },
+    {
+      "id": 5340503,
+      "completed": true,
+      "listId": 8779767,
+      "text": "Second test app"
     }
   ],
   "colors": [

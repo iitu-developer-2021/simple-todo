@@ -7,7 +7,7 @@ export const useTask = () => {
   const route = useRoute()
   const router = useRouter()
   const listStore = useListStore()
-  const { editListTitle, changeCompletedStatus } = listStore
+  const { editListTitle, changeCompletedStatus, addTask, addTaskLoading } = listStore
   const { list } = storeToRefs(listStore)
   const paramsId = ref()
 
@@ -30,9 +30,23 @@ export const useTask = () => {
     paramsId.value ? list.value.filter((listItem) => listItem.id === paramsId.value) : list.value
   )
 
+  const addTaskInputValue = ref('')
+  const addTaskFieldShow = ref(false)
+
+  const addTaskWrapper = (id: number) => {
+    return addTask(id, addTaskInputValue.value).then(() => {
+      addTaskFieldShow.value = false
+      addTaskInputValue.value = ''
+    })
+  }
+
   return {
     tasks,
-    editTaskTitle: editListTitle,
-    updateTaskCompleted: changeCompletedStatus,
+    editListTitle,
+    changeCompletedStatus,
+    addTask: addTaskWrapper,
+    addTaskLoading,
+    addTaskInputValue,
+    addTaskFieldShow,
   }
 }

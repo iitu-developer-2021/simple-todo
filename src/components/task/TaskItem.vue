@@ -5,24 +5,17 @@
       <BaseSvg icon="pencil" class="task-item__icon" @click="$emit('editTitle')" size="16" />
     </div>
     <span class="task-item__divider"></span>
-    <div class="task-item__children" v-if="children.length > 0">
-      <TaskChild
-        v-for="child in children"
-        :key="child.id"
-        :field-id="child.id.toString()"
-        :label="child.text"
-        :checked="child.completed"
-        class="task-item__child"
-        @update:checked="$emit('updateCheck', child.id)"
-      />
+    <div class="task-item__children">
+      <slot :children="children"></slot>
     </div>
+    <AddTask />
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { Task } from '@/types'
-import TaskChild from '@/components/task/TaskChild.vue'
+import AddTask from '@/components/add-task/AddTask.vue'
 
 interface Title {
   name: string
@@ -45,7 +38,7 @@ export default defineComponent({
   },
   emits: ['editTitle', 'updateCheck'],
   components: {
-    TaskChild,
+    AddTask,
   },
 })
 </script>
@@ -85,12 +78,6 @@ export default defineComponent({
     background: #f2f2f2;
     height: 1px;
     margin: 20px 0;
-  }
-
-  &__child {
-    &:not(:last-child) {
-      margin-bottom: 15px;
-    }
   }
 }
 </style>

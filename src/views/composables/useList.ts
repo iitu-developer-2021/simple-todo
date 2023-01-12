@@ -12,16 +12,8 @@ export const useList = () => {
   const { fetchList, deleteListItem, addListItem } = listStore
   const { list, addListItemLoading } = storeToRefs(listStore)
 
-  const addListWrapper = () => {
-    const generatedList: ListType = {
-      id: Math.ceil(Math.random() * 10000000) + 1,
-      name: title.value,
-      color: Object.assign({}, chosenColor.value) as Color,
-      colorId: chosenColor.value?.id as number,
-      tasks: [],
-    }
-
-    return addListItem(generatedList).then(() => {
+  const addListItemWrapper = () => {
+    return addListItem(title.value, chosenColor.value).then(() => {
       title.value = ''
       chosenColor.value = {
         id: Math.ceil(Math.random() * 10000000) + 1,
@@ -35,7 +27,7 @@ export const useList = () => {
   return {
     fetchList,
     deleteListItem,
-    addListItem: addListWrapper,
+    addListItem: addListItemWrapper,
     addListItemLoading,
     list,
     title,
