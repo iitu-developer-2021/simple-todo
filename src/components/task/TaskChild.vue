@@ -13,8 +13,18 @@
       </div>
       <span class="task-child__text">{{ label }}</span>
       <span class="task-child__actions">
-        <BaseSvg icon="pencil" size="15" class="task-child__pencil" />
-        <BaseSvg icon="only-close" size="15" class="task-child__close" />
+        <BaseSvg
+          icon="pencil"
+          size="15"
+          class="task-child__pencil"
+          @click.prevent.stop="$emit('editTask')"
+        />
+        <BaseSvg
+          icon="only-close"
+          size="15"
+          class="task-child__close"
+          @click.prevent.stop="$emit('deleteTask')"
+        />
       </span>
     </label>
   </div>

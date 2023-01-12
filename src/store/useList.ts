@@ -134,5 +134,22 @@ export const useListStore = defineStore('list', {
           this.addTaskLoading = false
         })
     },
+    deleteTask(taskId: number) {
+      return listApi
+        .deleteTask(taskId)
+        .then(() => {
+          this.list = this.list.map((listItem) => {
+            const taskIndex = listItem.tasks.findIndex((task) => task.id === taskId)
+            if (taskId !== -1) {
+              listItem.tasks.splice(taskIndex, 1)
+            }
+            return listItem
+          })
+        })
+        .catch((e) => {
+          console.error(e.message)
+          toast.error('Не удалось удалить задачу')
+        })
+    },
   },
 })

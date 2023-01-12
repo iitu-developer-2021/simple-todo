@@ -31,6 +31,7 @@
                 :checked="child.completed"
                 class="task-child"
                 @update:checked="changeCompletedStatus(child.id)"
+                @deleteTask="deleteTask(child.id)"
               />
               <AddTask
                 :can-add="!!$route.params.id"
@@ -82,6 +83,7 @@ export default defineComponent({
       addTaskLoading,
       addTaskInputValue,
       addTaskFieldShow,
+      deleteTask,
     } = useTask()
 
     await fetchList()
@@ -105,6 +107,7 @@ export default defineComponent({
       addTaskLoading,
       addTaskInputValue,
       addTaskFieldShow,
+      deleteTask,
     }
   },
   components: {

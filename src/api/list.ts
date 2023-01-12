@@ -25,3 +25,6 @@ export const changeTask = (updatedTask: Task) =>
 
 export const addTask = (task: Task) =>
   axios.post(URLS.tasks, task).then((response) => response.data)
+
+export const deleteTask = (taskId: number) =>
+  axios.delete(URLS.tasks + '/' + taskId).then((response) => response.data)
