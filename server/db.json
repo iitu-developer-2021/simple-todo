@@ -19,6 +19,16 @@
       "id": 2934629,
       "name": "Second test app",
       "colorId": 6
+    },
+    {
+      "id": 562046,
+      "name": "Test app",
+      "colorId": 4
+    },
+    {
+      "id": 8779767,
+      "name": "Second app",
+      "colorId": 5
     }
   ],
   "tasks": [

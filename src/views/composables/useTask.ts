@@ -15,10 +15,6 @@ export const useTask = () => {
     if (!paramsId.value || foundListIndex === -1) return router.push({ path: '/' })
   })
 
-  const tasks = computed(() =>
-    paramsId.value ? list.value.filter((listItem) => listItem.id === paramsId.value) : list.value
-  )
-
   watch(
     () => route.params.id,
     () => {
@@ -27,6 +23,10 @@ export const useTask = () => {
     {
       immediate: true,
     }
+  )
+
+  const tasks = computed(() =>
+    paramsId.value ? list.value.filter((listItem) => listItem.id === paramsId.value) : list.value
   )
 
   return {

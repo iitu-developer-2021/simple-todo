@@ -18,6 +18,7 @@
             v-for="listItem in tasks"
             :key="listItem.id"
             :title="{ name: listItem.name, color: listItem.color.hex }"
+            :children="listItem.tasks"
           />
         </main>
       </div>
